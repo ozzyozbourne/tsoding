@@ -1,5 +1,6 @@
 #ifndef OLIVE_C
 #define OLIVE_C
+
 #include <stdint.h>
 #include <stdio.h>
 #include <errno.h>
