@@ -2,4 +2,4 @@
 
 set -xe
 
-cc -Wall -Wextra -0 example example.c
+cc -Wall -Wextra -Wpedantic -o example example.c

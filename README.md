@@ -1,6 +1,6 @@
 # tsoding
 
-Learning real software engineering from Mista Zozin
+Learning real software engineering with Ahoo Mista Azozin
 
 Follow Tsoding on:
 
