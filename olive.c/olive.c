@@ -14,7 +14,7 @@ typedef int Errno;
 
 #define return_defer(value) do { result = (value); goto defer; } while(0)
 
-Errno olivec_save_to_ppm_file(const uint32_t *pixels, const size_t width, const size_t height, const char *file_path)
+Errno olivec_save_to_ppm_file(const uint32_t *const pixels, const size_t width, const size_t height, const char *file_path)
 {
     int result = 0;
     FILE *f = NULL;
@@ -40,6 +40,22 @@ Errno olivec_save_to_ppm_file(const uint32_t *pixels, const size_t width, const 
 defer:
     if (f) { fclose(f); }
     return result;
+}
+
+void olivec_fill_rect(uint32_t *const pixels, const size_t pixel_width, const size_t pixel_height, 
+                      int x0, int y0, const size_t w, const size_t h, const uint32_t color)
+{
+    for(int dy = 0; dy < (int) h; dy++){
+        const int y = y0 + dy; // position to start 
+        if (0 <= y && y < (int) pixel_height){
+            for(int dx = 0; dx < (int) w; dx++){
+                const int x =  x0 + dx;
+                if(0 <= x && x < (int) pixel_width){
+                    pixels[y*pixel_width + x] = color;
+                }
+            }
+        }
+    }       
 }
 
 #endif /* ifndef OLIVE_C */
