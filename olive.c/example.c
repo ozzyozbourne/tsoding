@@ -17,9 +17,9 @@
 static uint32_t pixels[WIDTH * HEIGHT];
 
 void olivec_fill_circle(uint32_t *const pixel, const size_t pixel_width, const size_t pixel_height, 
-        const int cy, const int cx, const size_t r, const uint32_t color)
+        const int cx, const int cy, const size_t r, const uint32_t color)
 {
-    const int r_sqrt = (int)r*r;
+    const int r_sqrt = (int)(r*r);
     const int p_ht_cast = (int)pixel_height;
     const int p_wd_cast = (int)pixel_width;
 
@@ -67,8 +67,17 @@ bool checkers_example(void)
 bool circle_example(void)
 {
     olivec_fill(pixels, WIDTH, HEIGHT, BACKGROUND_COLOR);
-    olivec_fill_circle(pixels, WIDTH, HEIGHT, WIDTH/2, HEIGHT/2, 100, FOREGROUND_COLOR);
-    const char *file_path = "circle.ppm";
+
+    for(int y = 0; y < ROWS; y++){
+        for(int x = 0; x < COLS; x++){
+            size_t radius = CELL_WIDTH;
+            if (CELL_HEIGHT < radius) { radius = CELL_HEIGHT; }
+            olivec_fill_circle(pixels, WIDTH, HEIGHT, x*CELL_WIDTH + CELL_WIDTH/2, y*CELL_HEIGHT + CELL_HEIGHT/2, radius/2, 
+                    FOREGROUND_COLOR);
+        }
+    }
+
+    const char *const file_path = "circle.ppm";
     Errno err = olivec_save_to_ppm_file(pixels, WIDTH, HEIGHT, file_path);
     if (err){
         fprintf(stderr, "ERROR: could not save file %s: %s\n", file_path, strerror(err));
