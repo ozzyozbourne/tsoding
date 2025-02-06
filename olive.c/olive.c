@@ -62,4 +62,29 @@ void olivec_fill_rect(uint32_t *const pixels, const size_t pixel_width, const si
     }       
 }
 
+void olivec_fill_circle(uint32_t *const pixel, const size_t pixel_width, const size_t pixel_height, 
+        const int cx, const int cy, const size_t r, const uint32_t color)
+{
+    const int r_sqrt = (int)(r*r);
+    const int p_ht_cast = (int)pixel_height;
+    const int p_wd_cast = (int)pixel_width;
+    // so here we are creating a square whose l and b = 2r
+    const int x1 = cx - (int)r;
+    const int y1 = cy - (int)r;
+    const int x2 = cx + (int)r;
+    const int y2 = cy + (int)r;
+    
+    for (int y = y1; y <= y2; y++){
+        if (0 <= y && y < p_ht_cast){
+            for (int x = x1; x <= x2; x++){
+                if (0 <= x && x < p_wd_cast){
+                   const int dx = x - cx; 
+                   const int dy = y - cy;
+                   if (dx*dx + dy*dy <= r_sqrt) { pixel[y*pixel_width + x] = color; }
+                }
+            }
+        } 
+    }
+}
+
 #endif /* ifndef OLIVE_C */

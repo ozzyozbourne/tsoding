@@ -6,8 +6,8 @@
 #define WIDTH 800
 #define HEIGHT 600
 
-#define COLS 8
-#define ROWS 6
+#define COLS (8*2)
+#define ROWS (6*2)
 #define CELL_WIDTH (WIDTH/COLS)
 #define CELL_HEIGHT (HEIGHT/ROWS)
 
@@ -15,32 +15,6 @@
 #define FOREGROUND_COLOR 0xFF2020FF
 
 static uint32_t pixels[WIDTH * HEIGHT];
-
-void olivec_fill_circle(uint32_t *const pixel, const size_t pixel_width, const size_t pixel_height, 
-        const int cx, const int cy, const size_t r, const uint32_t color)
-{
-    const int r_sqrt = (int)(r*r);
-    const int p_ht_cast = (int)pixel_height;
-    const int p_wd_cast = (int)pixel_width;
-
-    const int x1 = cx - (int)r;
-    const int y1 = cy - (int)r;
-    const int x2 = cx + (int)r;
-    const int y2 = cy + (int)r;
-    
-    for (int y = y1; y <= y2; y++){
-        if (0 <= y && y < p_ht_cast){
-            for (int x = x1; x <= x2; x++){
-                if (0 <= x && x < p_wd_cast){
-                   const int dx = x - cx; 
-                   const int dy = y - cy;
-                   if (dx*dx + dy*dy <= r_sqrt) { pixel[y*pixel_width + x] = color; }
-                }
-            }
-        } 
-    }
-}
-
 
 bool checkers_example(void)
 {
@@ -64,16 +38,22 @@ bool checkers_example(void)
 
 }
 
+float lerpf(const float a, const float b, const float t){ return a + (b - a) * t; }
+
 bool circle_example(void)
 {
     olivec_fill(pixels, WIDTH, HEIGHT, BACKGROUND_COLOR);
 
     for(int y = 0; y < ROWS; y++){
         for(int x = 0; x < COLS; x++){
+            const float u = (float)x/COLS;
+            const float v = (float)y/ROWS;
+            const float t = (u +v)/2;
+
             size_t radius = CELL_WIDTH;
             if (CELL_HEIGHT < radius) { radius = CELL_HEIGHT; }
-            olivec_fill_circle(pixels, WIDTH, HEIGHT, x*CELL_WIDTH + CELL_WIDTH/2, y*CELL_HEIGHT + CELL_HEIGHT/2, radius/2, 
-                    FOREGROUND_COLOR);
+            olivec_fill_circle(pixels, WIDTH, HEIGHT, x*CELL_WIDTH + CELL_WIDTH/2, y*CELL_HEIGHT + CELL_HEIGHT/2, 
+                    lerpf((float)radius/8, (float)radius/2, t), FOREGROUND_COLOR);
         }
     }
 
