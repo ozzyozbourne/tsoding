@@ -16,6 +16,20 @@
 
 static uint32_t pixels[WIDTH * HEIGHT];
 
+void swap_int(int *a, int *b)
+{
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+
+void olivec_draw_line(uint32_t *const pixels, const size_t pixel_width, const size_t pixel_height, 
+        const int x1, const int y1, const int x2, const int y2, const uint32_t color)
+{
+
+}
+
+
 bool checkers_example(void)
 {
     olivec_fill(pixels, WIDTH, HEIGHT, BACKGROUND_COLOR);
@@ -66,9 +80,25 @@ bool circle_example(void)
     return true;
 }
 
+bool lines_example(void)
+{
+    olivec_fill(pixels, WIDTH, HEIGHT, BACKGROUND_COLOR);
+
+    olivec_draw_line(pixels, WIDTH, HEIGHT, 0, 0, WIDTH, HEIGHT, FOREGROUND_COLOR);
+
+    const char *const file_path = "lines.ppm";
+    Errno err = olivec_save_to_ppm_file(pixels, WIDTH, HEIGHT, file_path);
+    if (err){
+        fprintf(stderr, "ERROR: could not save file %s: %s\n", file_path, strerror(err));
+        return false;
+    }
+    return true;
+}
+
 int main(void)
 {
     if (!checkers_example()){ return -1; }
     if (!circle_example()){ return -1; }
+    if (!lines_example()){ return -1; }
     return 0;
 }
