@@ -32,7 +32,8 @@
 .DS_Store
 
 ##############################
-## Executables and files
+## Executables and files or folders
 ##############################
 example
+example.dSYM
 *.ppm

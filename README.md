@@ -9,4 +9,4 @@ Follow Tsoding on:
 - [YouTube](https://www.youtube.com/@TsodingDaily)
 
 Support Zozin on: 
-- [https://github.com/tsoding/donate](https://github.com/tsoding/donate)
+- [Donate](https://github.com/tsoding/donate)
