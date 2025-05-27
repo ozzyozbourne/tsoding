@@ -31,13 +31,6 @@ float cost(float w)
     return result;
 }
 
-// first we generate a random weight, then we use that weight to calculate the actual output 
-// of the the function y = x*w(our wieght) , then we compute the difference in actual vs expected 
-// and square the result, then we divide it by len of the array to calculate the MEAN SQUARE ERROR 
-// so, now we have to drive this error to zero, so apply calculate to find the rate of the change of the 
-// function ie move opposito the direction were is function is growing ie towords zero, 
-//
-
 void demonstrate_gradient_direction() {
     float w1 = 0.5, w2 = 3.5;
 
@@ -96,8 +89,5 @@ int main(void){
     }
 
     printf("%f\n", w);
-
     return 0;
 }
-
-
